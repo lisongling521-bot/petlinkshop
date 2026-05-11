@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String
+  image       String
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  skus        SKU[]
+}
+
+model SKU {
+  id        String      @id @default(cuid())
+  productId String
+  name      String
+  code      String      @unique
+  size      String
+  price     Int
+  stock     Int
+  isActive  Boolean     @default(true)
+  sortOrder Int         @default(0)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  product   Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  items     OrderItem[]
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  orderNumber    String      @unique
+  status         String      @default("pending")
+  paymentStatus  String      @default("pending")
+  subtotal       Int
+  shippingFee    Int         @default(0)
+  total          Int
+  customerName   String
+  customerEmail  String
+  customerPhone  String
+  postalCode     String
+  prefecture     String
+  city           String
+  addressLine1   String
+  note           String?
+  trackingNumber String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  items          OrderItem[]
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  orderId   String
+  skuId     String
+  skuName   String
+  skuCode   String
+  unitPrice Int
+  quantity  Int
+  lineTotal Int
+  order     Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  sku       SKU    @relation(fields: [skuId], references: [id])
+}
