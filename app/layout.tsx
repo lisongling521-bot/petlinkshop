@@ -31,7 +31,7 @@ export const metadata: Metadata = {
         url: absoluteUrl("/images/hero-lifestyle.jpg"),
         width: 1200,
         height: 900,
-        alt: "Petlinkshop 低粉塵豆腐猫砂"
+        alt: "Petlinkshop low dust tofu cat litter"
       }
     ]
   },
