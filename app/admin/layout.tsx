@@ -17,6 +17,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <Link href="/admin/inventory" className="btn-secondary min-h-10 px-3 py-2">
             库存
           </Link>
+          <Link href="/admin/tiktok-shop" className="btn-secondary min-h-10 px-3 py-2">
+            TikTok Shop
+          </Link>
           <LogoutButton />
         </div>
       </div>
